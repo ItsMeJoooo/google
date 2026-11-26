@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Brilliant Pala — search the web and open websites.">
+  <title>Brilliant Pala</title>
+  <style>
+    :root { color-scheme: light; --ink:#202124; --muted:#5f6368; --line:#dfe1e5; --blue:#1a73e8; }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; min-height:100vh; font-family:Arial, Helvetica, sans-serif;
+      color:var(--ink); background:#fff; display:flex; flex-direction:column;
+    }
+    header { display:flex; justify-content:flex-end; align-items:center; gap:22px; padding:18px 28px; }
+    header a { color:var(--ink); text-decoration:none; font-size:13px; }
+    header a:hover { text-decoration:underline; }
+    main { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px 18px 90px; }
+    .brand { font-size:clamp(42px, 8vw, 76px); font-weight:600; letter-spacing:-4px; margin:0 0 28px; }
+    .brand span:nth-child(1){color:#4285f4}.brand span:nth-child(2){color:#ea4335}
+    .brand span:nth-child(3){color:#fbbc05}.brand span:nth-child(4){color:#4285f4}
+    .brand span:nth-child(5){color:#34a853}.brand span:nth-child(6){color:#ea4335}
+    .search-wrap { width:min(584px, 94vw); position:relative; }
+    .search-box {
+      display:flex; align-items:center; gap:12px; height:52px; padding:0 17px;
+      border:1px solid var(--line); border-radius:28px; box-shadow:0 1px 6px #20212422;
+    }
+    .search-box:focus-within, .search-box:hover { box-shadow:0 1px 8px #20212435; border-color:transparent; }
+    .search-box svg { flex:none; color:#9aa0a6; }
+    input { border:0; outline:0; flex:1; min-width:0; font-size:16px; color:var(--ink); background:transparent; }
+    .actions { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; justify-content:center; }
+    button {
+      border:1px solid #f8f9fa; background:#f8f9fa; color:#3c4043; border-radius:4px;
+      padding:10px 17px; font-size:14px; cursor:pointer;
+    }
+    button:hover { border-color:#dadce0; box-shadow:0 1px 1px #00000012; }
+    .quick-links { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:36px; max-width:650px; }
+    .quick-links a {
+      display:flex; align-items:center; gap:8px; border:1px solid #eceff1; border-radius:22px;
+      padding:10px 14px; color:#3c4043; text-decoration:none; font-size:13px;
+    }
+    .quick-links a:hover { background:#f8f9fa; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--blue); }
+    .hint { color:var(--muted); font-size:12px; margin-top:25px; text-align:center; line-height:1.5; }
+    footer { background:#f2f2f2; color:var(--muted); padding:15px 28px; font-size:13px; }
+    footer .footrow { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    @media(max-width:520px) { header{padding:16px} footer .footrow{justify-content:center} .brand{letter-spacing:-2px} }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="https://www.google.com" target="_blank" rel="noopener">Google</a>
+    <a href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a>
+  </header>
+
+  <main>
+    <h1 class="brand" aria-label="Brilliant Pala">
+      <span>B</span><span>r</span><span>i</span><span>l</span><span>l</span><span>i</span><span>a</span><span>n</span><span>t</span>
+      <span style="color:#5f6368;letter-spacing:-2px;font-size:.55em"> Pala</span>
+    </h1>
+
+    <form id="searchForm" class="search-wrap">
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/>
+          <path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <input id="searchInput" type="text" placeholder="Search the web or enter a website" autocomplete="off" aria-label="Search the web or enter a website">
+      </div>
+      <div class="actions">
+        <button type="submit">Google Search</button>
+        <button type="button" id="openButton">Open website</button>
+      </div>
+    </form>
+
+    <nav class="quick-links" aria-label="Popular websites">
+      <a href="https://www.google.com" target="_blank" rel="noopener"><span class="dot"></span> Google</a>
+      <a href="https://www.youtube.com" target="_blank" rel="noopener"><span class="dot" style="background:#ea4335"></span> YouTube</a>
+      <a href="https://www.instagram.com" target="_blank" rel="noopener"><span class="dot" style="background:#c13584"></span> Instagram</a>
+      <a href="https://www.wikipedia.org" target="_blank" rel="noopener"><span class="dot" style="background:#34a853"></span> Wikipedia</a>
+      <a href="https://www.github.com" target="_blank" rel="noopener"><span class="dot" style="background:#5f6368"></span> GitHub</a>
+    </nav>
+
+    <p class="hint">Search with Google or enter a website address, such as youtube.com or wikipedia.org.<br>
+      External websites open in a new tab. Some websites do not allow embedding inside other sites.</p>
+  </main>
+
+  <footer><div class="footrow"><span>Brilliant Pala</span><span>Search and explore the web</span></div></footer>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+    const openButton = document.getElementById('openButton');
+
+    function destination(value) {
+      const text = value.trim();
+      if (!text) return null;
+
+      // Treat a domain-like value as a website address; otherwise search Google.
+      const looksLikeUrl = /^(https?:\\/\\/)/i.test(text) ||
+        (/^[\\w-]+(\\.[\\w-]+)+(\\/.*)?$/.test(text) && !/\\s/.test(text));
+
+      if (looksLikeUrl) {
+        return /^https?:\\/\\//i.test(text) ? text : 'https://' + text;
+      }
+      return 'https://www.google.com/search?q=' + encodeURIComponent(text);
+    }
+
+    function openInput() {
+      const url = destination(input.value);
+      if (!url) { input.focus(); return; }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    form.addEventListener('submit', event => { event.preventDefault(); openInput(); });
+    openButton.addEventListener('click', openInput);
+  </script>
+</body>
+</html>
